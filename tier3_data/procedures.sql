@@ -35,9 +35,12 @@ CREATE TABLE IF NOT EXISTS audit_logs (
 DELIMITER //
 
 CREATE TRIGGER AfterMemberDelete
-AFTER DELETE ON members
+BEFORE DELETE ON members
 FOR EACH ROW
 BEGIN
+    DELETE FROM payments
+    WHERE member_id = OLD.member_id;
+
     INSERT INTO audit_logs (action, member_id) 
     VALUES ('DELETED', OLD.member_id);
 END //
