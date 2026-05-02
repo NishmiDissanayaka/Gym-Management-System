@@ -1,25 +1,48 @@
 <?php
-// Database connection එක සම්බන්ධ කිරීම
 require_once 'db_config.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Form එකෙන් එන දත්ත ලබා ගැනීම
-    $name = $_POST['full_name'];
-    $email = $_POST['email'];
-    $phone = $_POST['phone'];
-    $amount = $_POST['amount'];
+   
+    $full_name = $_POST['full_name'];
+    $email     = $_POST['email'];
+    $phone     = $_POST['phone'];
+    $gender    = $_POST['gender'];
+    $type_id   = $_POST['type_id'];
+    $amount    = $_POST['amount'];
 
-    // Tier 3 හි ඇති Stored Procedure එක (AddNewMember) කැඳවීම
-    // මෙය SQL Injection වලින් ආරක්ෂා වීමට හොඳම ක්‍රමයකි
-    $stmt = $conn->prepare("CALL AddNewMember(?, ?, ?, ?)");
-    $stmt->bind_param("sssd", $name, $email, $phone, $amount);
-
-    if ($stmt->execute()) {
-        echo "<script>alert('Member Registered Successfully!'); window.location.href='../tier1_presentation/register.php';</script>";
-    } else {
-        echo "Error: " . $stmt->error;
+    
+    if (empty($full_name) || empty($email) || empty($type_id)) {
+        die("Error: Please fill all required fields.");
     }
 
-    $stmt->close();
+    
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        die("Error: Invalid email format.");
+    }
+
+    
+    if (!preg_match('/^[0-9]{10}$/', $phone)) {
+        die("Error: Phone number must be 10 digits.");
+    }
+
+    try {
+        
+        $sql = "CALL RegisterNewMember(?, ?, ?, ?, ?, ?)";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("ssssid", $full_name, $email, $phone, $gender, $type_id, $amount);
+
+        if ($stmt->execute()) {
+            
+            header("Location: ../tier1_presentation/index.php?status=success");
+            exit();
+        } else {
+            echo "Error: " . $stmt->error;
+        }
+        $stmt->close();
+    } catch (Exception $e) {
+        echo "Error: " . $e->getMessage();
+    }
+
     $conn->close();
 }
+?>
