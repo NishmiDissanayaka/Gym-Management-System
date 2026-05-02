@@ -54,7 +54,7 @@ require_once '../../tier2_application/get_members.php';
             }
 
         } else {
-            echo "<tr><td colspan='7'>No members found</td></tr>";
+            echo "<tr><td colspan='10'>No members found</td></tr>";
         }
         ?>
 
