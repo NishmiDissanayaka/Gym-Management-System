@@ -26,7 +26,10 @@ require_once '../../tier2_application/get_members.php';
         <?php
             $total = isset($result->num_rows) ? $result->num_rows : 0;
         ?>
-        <div class="members-count-badge"><?php echo $total; ?> Members</div>
+        <div class="members-count-badge">
+            <?php echo $total; ?> Members
+        </div>
+        <!-- <div class="members-count-export"><?php echo $total; ?> Export</div> -->
     </div>
 
     <div class="members-table-card">
