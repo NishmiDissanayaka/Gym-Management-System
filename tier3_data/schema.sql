@@ -48,9 +48,11 @@ CREATE TABLE users (
 );
 
 -- Populate Membership Types
-INSERT INTO membership_types (type_name, amount, duration_months) VALUES
-('Regular', 5000.00, 1),
-('Premium', 9000.00, 3);
+INSERT INTO membership_types (type_name, amount, duration_months) 
+VALUES 
+    ('Regular', 5000.00, 1), 
+    ('Premium', 9000.00, 3)
+ON DUPLICATE KEY UPDATE amount = VALUES(amount), duration_months = VALUES(duration_months);
 
 
 -- RegisterNewMember Stored Procedure
