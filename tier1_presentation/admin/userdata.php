@@ -80,7 +80,7 @@ require_once '../../tier2_application/get_members.php';
     </div>
 
     <div class="members-footer">
-        <a href="index.php" class="btn-back">&#8592; Back to Dashboard</a>
+        <a href="admin_dashboard.php" class="btn-back">&#8592; Back to Dashboard</a>
     </div>
 
 </div>
