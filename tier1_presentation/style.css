@@ -16,10 +16,19 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    min-height: 100vh;
     color: #ffffff;
 }
 
+
+feature/member-registration-handle
+/* Overlay for registration page only */
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
 
 body::before {
     content: "";
@@ -28,8 +37,14 @@ body::before {
     left: 0;
     right: 0;
     bottom: 0;
+main
     background: rgba(0, 0, 0, 0.6);
     z-index: 0;
+    pointer-events: none;
+}
+
+*, *::before, *::after {
+    box-sizing: border-box;
 }
 
 /* Form Container */
@@ -41,7 +56,12 @@ body::before {
     padding: 30px;
     border-radius: 12px;
     box-shadow: 0 10px 25px rgba(0,0,0,0.5);
-    width: 400px;
+    width: 90%;            /* fluid width for small screens */
+    max-width: 520px;      /* cap width on larger screens */
+    margin: 24px auto;     /* provide breathing room on very small/short viewports */
+    max-height: calc(100vh - 80px); /* keep container from covering entire viewport */
+    overflow-y: auto;      /* allow internal scrolling if content is tall */
+    -webkit-overflow-scrolling: touch;
     border-top: 5px solid #ffcc00;
 }
 
@@ -55,6 +75,28 @@ h2 {
 /* Form Fields */
 .form-group {
     margin-bottom: 15px;
+}
+
+
+.form-row {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    align-items: flex-start;
+}
+
+.form-row .form-group {
+    flex: 1 1 220px; 
+    min-width: 180px;
+}
+
+@media (max-width: 600px) {
+    .form-row {
+        flex-direction: column;
+    }
+    .form-row .form-group {
+        min-width: 100%;
+    }
 }
 
 label {
@@ -74,6 +116,47 @@ input[type="number"] {
     color: white;
     border-radius: 6px;
     box-sizing: border-box;
+}
+
+/* Selects (match inputs for consistent UI) */
+select,
+select[name="type_id"],
+select[name="gender"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #444;
+    background-color: #3d3d3d;
+    color: #ffffff;
+    border-radius: 6px;
+    box-sizing: border-box;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    cursor: pointer;
+    background-image: linear-gradient(45deg, transparent 50%, rgba(255,255,255,0.75) 50%), linear-gradient(135deg, rgba(255,255,255,0.75) 50%, transparent 50%);
+    background-position: calc(100% - 18px) calc(50% - 2px), calc(100% - 12px) calc(50% - 2px);
+    background-size: 6px 6px, 6px 6px;
+    background-repeat: no-repeat;
+}
+
+select option {
+    background-color: #3d3d3d;
+    color: #ffffff;
+}
+
+/* Placeholder option styling (first option) */
+select option:first-child {
+    color: #bdbdbd;
+}
+
+/* Focus styles for accessibility */
+select:focus,
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="number"]:focus {
+    outline: none;
+    border-color: #ffcc00;
+    box-shadow: 0 0 0 3px rgba(255,204,0,0.12);
 }
 
 /* Submit Button */
@@ -104,7 +187,7 @@ input[type="number"] {
     border-radius: 6px;
     cursor: pointer;
     margin-top: 10px;
-
+}
 
 .member-table {
     width: 100%;
@@ -117,4 +200,24 @@ input[type="number"] {
     border: 1px solid #444;
 }
 
+@media (max-width: 420px) {
+    .container {
+        padding: 18px;
+        border-radius: 8px;
+    }
+
+    h2 {
+        font-size: 1.2rem;
+    }
+
+    body {
+        height: auto;
+        padding: 30px 0;
+    }
+}
+
+@media (min-width: 421px) and (max-width: 768px) {
+    .container {
+        max-width: 520px;
+    }
 }

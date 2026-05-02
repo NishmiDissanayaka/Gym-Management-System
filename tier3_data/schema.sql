@@ -46,3 +46,45 @@ CREATE TABLE users (
     password VARCHAR(255) NOT NULL,
     role ENUM('Admin', 'User') DEFAULT 'User'
 );
+
+-- Populate Membership Types
+INSERT INTO membership_types (type_name, amount, duration_months) 
+VALUES 
+    ('Regular', 5000.00, 1), 
+    ('Premium', 9000.00, 3)
+ON DUPLICATE KEY UPDATE amount = VALUES(amount), duration_months = VALUES(duration_months);
+
+
+-- RegisterNewMember Stored Procedure
+DELIMITER $$
+
+CREATE PROCEDURE RegisterNewMember(
+    IN p_full_name VARCHAR(100),
+    IN p_email VARCHAR(100),
+    IN p_phone VARCHAR(15),
+    IN p_gender ENUM('Male', 'Female', 'Other'),
+    IN p_type_id INT
+)
+BEGIN
+    DECLARE v_amount DECIMAL(10,2);
+
+    SELECT amount
+    INTO v_amount
+    FROM membership_types
+    WHERE type_id = p_type_id;
+
+    IF v_amount IS NULL THEN
+        SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = 'Invalid membership type.';
+    END IF;
+
+    INSERT INTO members (full_name, email, phone, gender, type_id)
+    VALUES (p_full_name, p_email, p_phone, p_gender, p_type_id);
+
+    SET @new_member_id = LAST_INSERT_ID();
+
+    INSERT INTO payments (member_id, amount)
+    VALUES (@new_member_id, v_amount);
+END$$
+
+DELIMITER ;
