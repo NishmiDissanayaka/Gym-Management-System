@@ -43,7 +43,7 @@ $conn->close();
         <div class="dash-brand">
             <div class="dash-brand-icon">&#127947;</div>
             <div>
-                <div class="dash-brand-name">PowerFit Gym</div>
+                <div class="dash-brand-name">Fitness Hub</div>
                 <div class="dash-brand-tagline">Management System</div>
             </div>
         </div>
