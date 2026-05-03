@@ -31,104 +31,102 @@ $conn->close();
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Admin Dashboard - Gym Management System</title>
-    <link rel="stylesheet" href="../style.css">
-    <link rel="stylesheet" href="admin_style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Fitness Hub</title>
     <link rel="stylesheet" href="dashboard_style.css">
 </head>
-<body class="dashboard-page">
+<body>
 
-    <!-- Top Header -->
-    <header class="dash-header">
-        <div class="dash-brand">
-            <div class="dash-brand-icon">&#127947;</div>
-            <div>
-                <div class="dash-brand-name">Fitness Hub</div>
-                <div class="dash-brand-tagline">Management System</div>
-            </div>
-        </div>
-        <div class="dash-welcome">
-            <div class="dash-welcome-text">Welcome, <span>Admin</span></div>
-            <div class="dash-welcome-date"><?php echo date('l, F j, Y'); ?></div>
-        </div>
-    </header>
+    <?php $active_page = 'dashboard'; include 'includes/sidebar.php'; ?>
 
     <!-- Main Content -->
-    <main class="dash-main">
+    <div class="main-content">
 
-        <!-- Page Title -->
-        <div class="dash-page-title">
-            <h1>Dashboard</h1>
-            <p>Overview of your gym at a glance</p>
-        </div>
+        <!-- Top Bar -->
+        <header class="topbar">
+            <div class="topbar-title">
+                <h1>Admin Dashboard</h1>
+                <p>Manage your gym operations efficiently</p>
+            </div>
+            <div class="topbar-meta">
+                <div class="topbar-date"><?php echo date('l, F j, Y'); ?></div>
+                <div class="topbar-admin">Welcome, <strong>Admin</strong></div>
+            </div>
+        </header>
 
         <!-- Stats Cards -->
-        <div class="dash-stats">
+        <div class="stat-grid">
 
             <div class="stat-card">
-                <div class="stat-icon">&#128101;</div>
-                <div class="stat-body">
+                <div class="stat-icon">
+                    <!-- Users -->
+                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#e6a800" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                    </svg>
+                </div>
+                <div class="stat-info">
                     <div class="stat-value"><?php echo $total_members; ?></div>
                     <div class="stat-label">Total Members</div>
                 </div>
             </div>
 
             <div class="stat-card">
-                <div class="stat-icon">&#128197;</div>
-                <div class="stat-body">
+                <div class="stat-icon">
+                    <!-- Calendar -->
+                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#e6a800" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>
+                    </svg>
+                </div>
+                <div class="stat-info">
                     <div class="stat-value"><?php echo $members_this_month; ?></div>
                     <div class="stat-label">New This Month</div>
                 </div>
             </div>
 
             <div class="stat-card">
-                <div class="stat-icon">&#127947;</div>
-                <div class="stat-body">
+                <div class="stat-icon">
+                    <!-- Dumbbell -->
+                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#e6a800" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M6 4v16M18 4v16"/><path d="M4 8h4M16 8h4M4 16h4M16 16h4"/><line x1="8" y1="12" x2="16" y2="12"/>
+                    </svg>
+                </div>
+                <div class="stat-info">
                     <div class="stat-value"><?php echo $trainer_count; ?></div>
                     <div class="stat-label">Trainers</div>
                 </div>
             </div>
 
             <div class="stat-card">
-                <div class="stat-icon">&#128176;</div>
-                <div class="stat-body">
-                    <div class="stat-value">Rs. <?php echo number_format($monthly_payment, 2); ?></div>
+                <div class="stat-icon">
+                    <!-- Dollar Sign -->
+                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#e6a800" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+                    </svg>
+                </div>
+                <div class="stat-info">
+                    <div class="stat-value">Rs.<?php echo number_format($monthly_payment, 2); ?></div>
                     <div class="stat-label">Monthly Revenue</div>
                 </div>
             </div>
 
         </div>
 
-        <!-- Quick Action Cards -->
-        <div class="dash-section-title">Quick Actions</div>
-        <div class="dash-cards">
+        <!-- Quick Actions -->
+        <section class="quick-actions">
+            <h2 class="section-title">Quick Actions</h2>
+            <div class="action-buttons">
+                <a href="register.php" class="btn btn-add">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                    Add New Member
+                </a>
+                <a href="userdata.php" class="btn btn-view">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                    View Members List
+                </a>
+            </div>
+        </section>
 
-            <a href="userdata.php" class="dash-card">
-                <div class="dash-card-icon">&#128101;</div>
-                <div class="dash-card-body">
-                    <div class="dash-card-title">View Members</div>
-                    <div class="dash-card-desc">Browse all registered gym members</div>
-                </div>
-                <div class="dash-card-arrow">&#8594;</div>
-            </a>
-
-            <a href="../register.php" class="dash-card">
-                <div class="dash-card-icon">&#10011;</div>
-                <div class="dash-card-body">
-                    <div class="dash-card-title">Add New Member</div>
-                    <div class="dash-card-desc">Register a new gym member</div>
-                </div>
-                <div class="dash-card-arrow">&#8594;</div>
-            </a>
-
-        </div>
-
-    </main>
-
-    <!-- Footer -->
-    <footer class="dash-footer">
-        &copy; <?php echo date('Y'); ?> PowerFit Gym &mdash; All rights reserved
-    </footer>
+    </div>
 
 </body>
 </html>
