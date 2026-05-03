@@ -37,79 +37,7 @@ $conn->close();
 </head>
 <body>
 
-    <!-- Sidebar -->
-    <aside class="sidebar">
-        <div class="sidebar-brand">
-            <div class="sidebar-brand-icon">
-                <!-- Dumbbell -->
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#2c3e50" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M6 4v16M18 4v16"/><path d="M4 8h4M16 8h4M4 16h4M16 16h4"/><line x1="8" y1="12" x2="16" y2="12"/>
-                </svg>
-            </div>
-            <span>Fitness Hub</span>
-        </div>
-
-        <nav class="sidebar-nav">
-            <a href="admin_dashboard.php" class="nav-link active">
-                <span class="nav-icon">
-                    <!-- Grid / Dashboard -->
-                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/>
-                    </svg>
-                </span>
-                Dashboard
-            </a>
-            <a href="../register.php" class="nav-link">
-                <span class="nav-icon">
-                    <!-- User Plus -->
-                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" y1="8" x2="19" y2="14"/><line x1="22" y1="11" x2="16" y2="11"/>
-                    </svg>
-                </span>
-                Add Member
-            </a>
-            <a href="userdata.php" class="nav-link">
-                <span class="nav-icon">
-                    <!-- Users -->
-                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
-                    </svg>
-                </span>
-                View Members
-            </a>
-            <a href="#" class="nav-link">
-                <span class="nav-icon">
-                    <!-- Credit Card -->
-                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/>
-                    </svg>
-                </span>
-                Payments
-            </a>
-            <a href="#" class="nav-link">
-                <span class="nav-icon">
-                    <!-- Dumbbell -->
-                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M6 4v16M18 4v16"/><path d="M4 8h4M16 8h4M4 16h4M16 16h4"/><line x1="8" y1="12" x2="16" y2="12"/>
-                    </svg>
-                </span>
-                Trainers
-            </a>
-            <a href="#" class="nav-link">
-                <span class="nav-icon">
-                    <!-- Bar Chart -->
-                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/>
-                    </svg>
-                </span>
-                Reports
-            </a>
-        </nav>
-
-        <div class="sidebar-footer">
-            &copy; <?php echo date('Y'); ?> Fitness Hub
-        </div>
-    </aside>
+    <?php $active_page = 'dashboard'; include 'includes/sidebar.php'; ?>
 
     <!-- Main Content -->
     <div class="main-content">
@@ -187,7 +115,7 @@ $conn->close();
         <section class="quick-actions">
             <h2 class="section-title">Quick Actions</h2>
             <div class="action-buttons">
-                <a href="../register.php" class="btn btn-add">
+                <a href="register.php" class="btn btn-add">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
                     Add New Member
                 </a>
