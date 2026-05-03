@@ -1,8 +1,8 @@
--- Database එක නිර්මාණය කිරීම
+
 CREATE DATABASE gym_management;
 USE gym_management;
 
--- 1. Membership Types Table
+
 CREATE TABLE membership_types (
     type_id INT PRIMARY KEY AUTO_INCREMENT,
     type_name VARCHAR(50) NOT NULL,
@@ -10,7 +10,7 @@ CREATE TABLE membership_types (
     duration_months INT NOT NULL
 );
 
--- 2. Members Table
+
 CREATE TABLE members (
     member_id INT PRIMARY KEY AUTO_INCREMENT,
     full_name VARCHAR(100) NOT NULL,
@@ -22,7 +22,7 @@ CREATE TABLE members (
     FOREIGN KEY (type_id) REFERENCES membership_types(type_id)
 );
 
--- 3. Trainers Table
+
 CREATE TABLE trainers (
     trainer_id INT PRIMARY KEY AUTO_INCREMENT,
     name VARCHAR(100) NOT NULL,
@@ -30,7 +30,7 @@ CREATE TABLE trainers (
     phone VARCHAR(15)
 );
 
--- 4. Payments Table
+
 CREATE TABLE payments (
     payment_id INT PRIMARY KEY AUTO_INCREMENT,
     member_id INT,
@@ -39,7 +39,6 @@ CREATE TABLE payments (
     FOREIGN KEY (member_id) REFERENCES members(member_id)
 );
 
--- 5. Users Table (Login සඳහා - Admin/User roles)
 CREATE TABLE users (
     user_id INT PRIMARY KEY AUTO_INCREMENT,
     username VARCHAR(50) NOT NULL UNIQUE,
@@ -47,7 +46,7 @@ CREATE TABLE users (
     role ENUM('Admin', 'User') DEFAULT 'User'
 );
 
--- Populate Membership Types
+
 INSERT INTO membership_types (type_name, amount, duration_months) 
 VALUES 
     ('Regular', 5000.00, 1), 
@@ -55,7 +54,6 @@ VALUES
 ON DUPLICATE KEY UPDATE amount = VALUES(amount), duration_months = VALUES(duration_months);
 
 
--- RegisterNewMember Stored Procedure
 DELIMITER $$
 
 CREATE PROCEDURE RegisterNewMember(
@@ -87,7 +85,6 @@ BEGIN
     VALUES (@new_member_id, v_amount);
 END$$
 
--- වාර්තා ලබා ගැනීමට අවශ්‍ය Stored Procedures
 
 CREATE PROCEDURE GetAllMembers()
 BEGIN
