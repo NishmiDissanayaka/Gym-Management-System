@@ -93,7 +93,7 @@ CREATE PROCEDURE GetAllMembers()
 BEGIN
     SELECT m.member_id, m.full_name, m.email, m.phone, m.gender, mt.type_name 
     FROM members m
-    JOIN membership_types mt ON m.type_id = mt.type_id;
+    LEFT JOIN membership_types mt ON m.type_id = mt.type_id;
 END$$
 
 CREATE PROCEDURE GetTotalRevenue()
