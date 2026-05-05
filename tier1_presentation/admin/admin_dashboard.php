@@ -128,5 +128,6 @@ $conn->close();
 
     </div>
 
+    <script src="includes/alerts.js"></script>
 </body>
 </html>
