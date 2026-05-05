@@ -54,6 +54,16 @@ function nav_class(string $page, string $active): string {
             </span>
             View Members
         </a>
+        <a href="trainers.php" class="<?php echo nav_class('trainers', $active_page); ?>">
+            <span class="nav-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M6 4v16M18 4v16"/>
+                    <path d="M4 8h4M16 8h4M4 16h4M16 16h4"/>
+                    <line x1="8" y1="12" x2="16" y2="12"/>
+                </svg>
+            </span>
+            Trainers
+        </a>
 
         <a href="payments.php" class="<?php echo nav_class('payments', $active_page); ?>">
             <span class="nav-icon">
@@ -65,7 +75,7 @@ function nav_class(string $page, string $active): string {
             Payments
         </a>
 
-        <a href="trainers.php" class="<?php echo nav_class('trainers', $active_page); ?>">
+        <a href="membership_plans.php" class="<?php echo nav_class('membership_plans', $active_page); ?>">
             <span class="nav-icon">
                 <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M6 4v16M18 4v16"/>
@@ -73,7 +83,7 @@ function nav_class(string $page, string $active): string {
                     <line x1="8" y1="12" x2="16" y2="12"/>
                 </svg>
             </span>
-            Trainers
+            Membership Plans
         </a>
 
         <a href="reports.php" class="<?php echo nav_class('reports', $active_page); ?>">
