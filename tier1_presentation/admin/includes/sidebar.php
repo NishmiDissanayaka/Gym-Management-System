@@ -65,27 +65,6 @@ function nav_class(string $page, string $active): string {
             Payments
         </a>
 
-        <a href="membership_plans.php" class="<?php echo nav_class('membership_plans', $active_page); ?>">
-            <span class="nav-icon">
-                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M6 4v16M18 4v16"/>
-                    <path d="M4 8h4M16 8h4M4 16h4M16 16h4"/>
-                    <line x1="8" y1="12" x2="16" y2="12"/>
-                </svg>
-            </span>
-            Membership Plans
-        </a>
-
-        <a href="payments.php" class="<?php echo nav_class('payments', $active_page); ?>">
-            <span class="nav-icon">
-                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <rect x="1" y="4" width="22" height="16" rx="2"/>
-                    <line x1="1" y1="10" x2="23" y2="10"/>
-                </svg>
-            </span>
-            Payments
-        </a>
-
         <a href="membership_plans.php" class="<?php echo nav_class('plans', $active_page); ?>">
             <span class="nav-icon">
                 <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
