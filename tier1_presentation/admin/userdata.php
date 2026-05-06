@@ -37,6 +37,9 @@ require_once '../../tier2_application/get_members.php';
                         <th>Gender</th>
                         <th>Membership Plan</th>
                         <th>Join Date</th>
+                        <th>Status</th>
+<th>Expiry Date</th>
+<th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -65,6 +68,20 @@ require_once '../../tier2_application/get_members.php';
                         </td>
                         <td><span class="plan-badge <?php echo $planClass; ?>"><?php echo $plan; ?></span></td>
                         <td class="cell-date"><?php echo htmlspecialchars($row["join_date"]); ?></td>
+                        <td class="cell-status">
+    <span class="status-tag status-<?php echo strtolower(htmlspecialchars($row['status'])); ?>">
+        <?php echo htmlspecialchars($row["status"]); ?>
+    </span>
+</td>
+<td class="cell-date"><?php echo htmlspecialchars($row["membership_end"]); ?></td>
+<td>
+    <form method="POST" action="../../tier2_application/get_members.php" style="display:inline;">
+        <input type="hidden" name="member_id" value="<?php echo $row['member_id']; ?>">
+        <input type="hidden" name="days" value="30">
+        <input type="hidden" name="action" value="freeze">
+        <button type="submit" class="btn-freeze">Freeze</button>
+    </form>
+</td>
                     </tr>
                 <?php
                     }
