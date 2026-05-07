@@ -10,11 +10,6 @@ require_once '../../tier2_application/get_trainers.php';
     <title>View Members - Fitness Hub</title>
     <link rel="stylesheet" href="dashboard_style.css">
     <link rel="stylesheet" href="userdata_style.css">
-    <style>
-        .trainer-select { padding: 5px; border-radius: 4px; border: 1px solid #ddd; font-size: 12px; width: 130px; }
-        .btn-assign-small { background: #007bff; color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer; font-size: 11px; margin-top: 5px; }
-        .btn-assign-small:hover { background: #0056b3; }
-    </style>
 </head>
 <body>
 
@@ -88,7 +83,7 @@ require_once '../../tier2_application/get_trainers.php';
                         </td>
                         <td><?php echo $row['membership_end'] ? htmlspecialchars($row['membership_end']) : 'N/A'; ?></td>
                         <td>
-                            <form action="../../tier2_application/process_assignment.php" method="POST">
+                            <form action="../../tier2_application/process_assignment.php" method="POST" class="assign-form">
                                 <input type="hidden" name="member_id" value="<?php echo $member_id; ?>">
                                 <select name="trainer_id" class="trainer-select" required>
                                     <option value="">Select Trainer</option>
@@ -101,7 +96,7 @@ require_once '../../tier2_application/get_trainers.php';
                                         </option>
                                     <?php endwhile; ?>
                                 </select>
-                                <button type="submit" class="btn-assign-small">Assign</button>
+                                <button type="submit" class="btn-assign">Assign</button>
                             </form>
                         </td>
                         <td>
