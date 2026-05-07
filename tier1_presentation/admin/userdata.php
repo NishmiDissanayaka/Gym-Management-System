@@ -26,6 +26,13 @@ require_once '../../tier2_application/get_members.php';
             <div class="members-count-badge"><?php echo $total; ?> Members</div>
         </div>
 
+        <?php if (isset($_GET['success'])): ?>
+            <div class="alert alert-success">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                <?php echo htmlspecialchars($_GET['success']); ?>
+            </div>
+        <?php endif; ?>
+
         <div class="table-card">
             <table class="member-table">
                 <thead>
