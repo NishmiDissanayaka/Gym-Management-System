@@ -1,6 +1,8 @@
 <?php
+// Connect to Tier 2 Application Logic
 require_once '../../tier2_application/get_payments.php';
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,168 +10,13 @@ require_once '../../tier2_application/get_payments.php';
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Payments - Fitness Hub</title>
     <link rel="stylesheet" href="dashboard_style.css">
-    <style>
-        body { background: #f0f2f5; }
-
-        /* ── Page Header ─────────────────────────────── */
-        .page-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 28px;
-        }
-        .page-header h1 { font-size: 1.9rem; font-weight: 800; color: #2c3e50; margin: 0; }
-        .page-header p  { font-size: 0.88rem; color: #7f8c8d; margin: 4px 0 0; }
-
-        /* ── Summary Cards ───────────────────────────── */
-        .summary-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 18px;
-            margin-bottom: 28px;
-        }
-
-        .summary-card {
-            background: #fff;
-            border-radius: 12px;
-            padding: 22px 24px;
-            display: flex;
-            align-items: center;
-            gap: 18px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.07);
-            border-bottom: 4px solid #ffcc00;
-            transition: transform 0.2s;
-        }
-        .summary-card:hover { transform: translateY(-3px); }
-
-        .summary-icon {
-            width: 50px;
-            height: 50px;
-            background: #fff8e1;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-        }
-
-        .summary-value {
-            font-size: 1.4rem;
-            font-weight: 800;
-            color: #2c3e50;
-        }
-        .summary-label {
-            font-size: 0.72rem;
-            color: #7f8c8d;
-            text-transform: uppercase;
-            letter-spacing: 0.7px;
-            margin-top: 3px;
-        }
-
-        /* ── Table Card ──────────────────────────────── */
-        .table-card {
-            background: #fff;
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.07);
-            overflow: hidden;
-        }
-
-        .table-card-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 18px 24px;
-            border-bottom: 1px solid #f0f2f5;
-        }
-
-        .table-card-title {
-            font-size: 1rem;
-            font-weight: 700;
-            color: #2c3e50;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .count-badge {
-            background: #ffcc00;
-            color: #2c3e50;
-            font-weight: 700;
-            font-size: 0.78rem;
-            padding: 4px 12px;
-            border-radius: 999px;
-        }
-
-        /* ── Table ───────────────────────────────────── */
-        .payment-table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 0.9rem;
-        }
-
-        .payment-table thead tr {
-            background: #2c3e50;
-            color: #ffcc00;
-        }
-
-        .payment-table thead th {
-            padding: 13px 20px;
-            text-align: left;
-            font-size: 0.75rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .payment-table tbody tr {
-            border-bottom: 1px solid #f0f2f5;
-            transition: background 0.15s;
-        }
-        .payment-table tbody tr:hover { background: #fffbea; }
-
-        .payment-table td {
-            padding: 14px 20px;
-            color: #2c3e50;
-            vertical-align: middle;
-        }
-
-        .cell-id    { color: #95a5a6; font-size: 0.82rem; font-weight: 600; }
-        .cell-name  { font-weight: 600; }
-        .cell-email { color: #7f8c8d; font-size: 0.85rem; }
-        .cell-amount {
-            font-weight: 800;
-            color: #27ae60;
-            font-size: 0.95rem;
-        }
-        .cell-date  { color: #95a5a6; font-size: 0.84rem; }
-
-        /* Plan badge */
-        .plan-badge {
-            display: inline-block;
-            padding: 3px 11px;
-            border-radius: 999px;
-            font-size: 0.75rem;
-            font-weight: 700;
-            background: #fff8e1;
-            color: #e6a800;
-            border: 1px solid #ffe082;
-        }
-
-        .no-data {
-            text-align: center;
-            padding: 56px !important;
-            color: #95a5a6;
-            font-style: italic;
-        }
-    </style>
+    <link rel="stylesheet" href="payments_style.css">
 </head>
 <body>
-
     <?php $active_page = 'payments'; include 'includes/sidebar.php'; ?>
 
     <div class="main-content">
 
-        <!-- Top Bar -->
         <header class="topbar">
             <div class="topbar-title">
                 <h1>Payments</h1>
@@ -177,11 +24,44 @@ require_once '../../tier2_application/get_payments.php';
             </div>
             <div class="topbar-meta">
                 <div class="topbar-date"><?php echo date('l, F j, Y'); ?></div>
-                <div class="topbar-admin">Welcome, <strong>Admin</strong></div>
             </div>
         </header>
 
-        <!-- Summary Cards -->
+        <div class="add-payment-card">
+            <h3>
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2c3e50" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                Add New Payment
+            </h3>
+            <form action="../../tier2_application/process_new_payment.php" method="POST">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Select Member</label>
+                        <select name="member_id" id="member_select" class="form-control" required onchange="updatePaymentDetails()">
+                            <option value="">-- Choose Member --</option>
+                            <?php while($m = $members_list->fetch_assoc()): ?>
+                                <option value="<?php echo $m['member_id']; ?>" 
+                                        data-price="<?php echo $m['amount']; ?>" 
+                                        data-plan="<?php echo htmlspecialchars($m['type_name']); ?>">
+                                    <?php echo $m['member_id'] . " - " . htmlspecialchars($m['full_name']); ?>
+                                </option>
+                            <?php endwhile; ?>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Membership Plan</label>
+                        <input type="text" id="display_plan" class="form-control" readonly placeholder="Auto-filled">
+                    </div>
+                    <div class="form-group">
+                        <label>Amount (Rs.)</label>
+                        <input type="number" step="0.01" name="amount" id="display_amount" class="form-control" required>
+                    </div>
+                    <div class="form-group" style="flex:0;">
+                        <button type="submit" class="btn-submit">Record Payment</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
         <div class="summary-grid">
 
             <div class="summary-card">
@@ -216,23 +96,78 @@ require_once '../../tier2_application/get_payments.php';
                 </div>
                 <div>
                     <div class="summary-value"><?php echo $total_payments; ?></div>
-                    <div class="summary-label">Total Transactions</div>
+                    <div class="summary-label">Filtered Transactions</div>
                 </div>
             </div>
 
         </div>
 
-        <!-- Payments Table -->
+        <div class="alerts-panel">
+            <div class="alerts-panel-header">
+                <h3>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#e6a800" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                    Payment Anomaly Alerts
+                </h3>
+            </div>
+            <?php if (!empty($alerts)): ?>
+                <table class="alerts-table">
+                    <thead>
+                        <tr><th>Member</th><th>Alert Type</th><th>Amount</th><th>Time</th></tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($alerts as $alert): ?>
+                            <tr>
+                                <td><?php echo htmlspecialchars($alert['member_name'] ?? '—'); ?></td>
+                                <td><span class="alert-badge <?php echo htmlspecialchars($alert['alert_type']); ?>"><?php echo htmlspecialchars($alert['alert_type']); ?></span></td>
+                                <td style="color:#c0392b; font-weight:bold;">Rs. <?php echo number_format($alert['amount'], 2); ?></td>
+                                <td><?php echo date('M j, g:i A', strtotime($alert['detected_at'])); ?></td>
+                            </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+            <?php else: ?>
+                <p class="no-alerts">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#1e8449" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                    No anomalies detected.
+                </p>
+            <?php endif; ?>
+        </div>
+
         <div class="table-card">
 
             <div class="table-card-header">
                 <div class="table-card-title">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2c3e50" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/>
-                    </svg>
-                    Payment History
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2c3e50" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/>
+                        </svg>
+                        Payment History
+                        <span class="count-badge"><?php echo $total_payments; ?> Records</span>
+                    </div>
                 </div>
-                <span class="count-badge"><?php echo $total_payments; ?> Records</span>
+                
+                <form method="GET" action="payments.php" class="filter-form">
+                    <div class="date-input-group">
+                        <label for="start_date">From:</label>
+                        <input type="date" id="start_date" name="start_date" class="filter-input" value="<?php echo htmlspecialchars($start_date ?? ''); ?>">
+                    </div>
+                    
+                    <div class="date-input-group">
+                        <label for="end_date">To:</label>
+                        <input type="date" id="end_date" name="end_date" class="filter-input" value="<?php echo htmlspecialchars($end_date ?? ''); ?>">
+                    </div>
+
+                    <button type="submit" class="filter-btn">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon>
+                        </svg>
+                        Filter
+                    </button>
+                    
+                    <?php if(!empty($start_date) || !empty($end_date)): ?>
+                        <a href="payments.php" class="reset-btn">Reset</a>
+                    <?php endif; ?>
+                </form>
             </div>
 
             <table class="payment-table">
@@ -247,7 +182,7 @@ require_once '../../tier2_application/get_payments.php';
                     </tr>
                 </thead>
                 <tbody>
-                <?php if ($payments_result && $payments_result->num_rows > 0): ?>
+                <?php if (isset($payments_result) && $payments_result->num_rows > 0): ?>
                     <?php while ($row = $payments_result->fetch_assoc()): ?>
                         <tr>
                             <td class="cell-id">#<?php echo htmlspecialchars($row['payment_id']); ?></td>
@@ -262,14 +197,21 @@ require_once '../../tier2_application/get_payments.php';
                     <?php endwhile; ?>
                 <?php else: ?>
                     <tr>
-                        <td colspan="6" class="no-data">No payment records found</td>
+                        <td colspan="6" class="no-data">No payment records found for the selected dates</td>
                     </tr>
                 <?php endif; ?>
                 </tbody>
             </table>
         </div>
-
     </div>
 
+    <script>
+    function updatePaymentDetails() {
+        var select = document.getElementById('member_select');
+        var selectedOption = select.options[select.selectedIndex];
+        document.getElementById('display_amount').value = selectedOption.getAttribute('data-price') || "";
+        document.getElementById('display_plan').value = selectedOption.getAttribute('data-plan') || "";
+    }
+    </script>
 </body>
 </html>
