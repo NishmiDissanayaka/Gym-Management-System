@@ -1,6 +1,6 @@
 body { background: #f0f2f5; }
 
-/* ── Page Header ─────────────────────────────── */
+/* Page Header */
 .page-header {
     display: flex;
     align-items: center;
@@ -38,7 +38,7 @@ body { background: #f0f2f5; }
 }
 .btn-add:hover { background: #1a252f; transform: translateY(-1px); }
 
-/* ── Table Card ──────────────────────────────── */
+/* Table Card */
 .table-card {
     background: #fff;
     border-radius: 12px;
@@ -63,15 +63,15 @@ body { background: #f0f2f5; }
     gap: 10px;
 }
 
-.plans-table {
+.classes-table {
     width: 100%;
     border-collapse: collapse;
     font-size: 0.9rem;
 }
 
-.plans-table thead tr { background: #2c3e50; color: #ffcc00; }
-.plans-table thead th {
-    padding: 13px 22px;
+.classes-table thead tr { background: #2c3e50; color: #ffcc00; }
+.classes-table thead th {
+    padding: 13px 18px;
     text-align: left;
     font-size: 0.75rem;
     font-weight: 700;
@@ -79,64 +79,71 @@ body { background: #f0f2f5; }
     letter-spacing: 0.5px;
 }
 
-.plans-table tbody tr {
+.classes-table tbody tr {
     border-bottom: 1px solid #f0f2f5;
     transition: background 0.15s;
 }
-.plans-table tbody tr:hover { background: #fffbea; }
+.classes-table tbody tr:hover { background: #fffbea; }
 
-.plans-table td {
-    padding: 15px 22px;
+.classes-table td {
+    padding: 14px 18px;
     color: #2c3e50;
     vertical-align: middle;
 }
 
 .cell-id { color: #95a5a6; font-size: 0.82rem; font-weight: 600; width: 60px; }
+.cell-name { font-weight: 700; }
 
-.plan-name {
-    font-weight: 700;
-    font-size: 0.95rem;
-}
+.schedule-text { font-weight: 600; color: #2c3e50; }
+.schedule-subtext { font-size: 0.78rem; color: #7f8c8d; margin-top: 4px; }
 
-.plan-icon-wrap {
-    width: 38px;
-    height: 38px;
-    background: #fff8e1;
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #f39c12;
-    flex-shrink: 0;
-}
-
-.name-cell { display: flex; align-items: center; gap: 12px; }
-
-.amount-text {
-    font-weight: 700;
-    color: #1e8449;
-    font-size: 0.95rem;
-}
-
-.duration-badge {
+.count-pill {
     display: inline-block;
-    padding: 4px 14px;
+    padding: 4px 12px;
     border-radius: 999px;
     font-size: 0.78rem;
-    font-weight: 600;
-    background: #eaf4fb;
-    color: #2980b9;
-    border: 1px solid #aed6f1;
+    font-weight: 700;
+}
+.count-pill.enrolled { background: #eafaf1; color: #1e8449; border: 1px solid #a9dfbf; }
+.count-pill.waitlist { background: #fff8e1; color: #b9770e; border: 1px solid #f1c40f; }
+
+.inline-form {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    min-width: 160px;
+}
+.inline-select {
+    width: 100%;
+    padding: 6px 8px;
+    border: 1px solid #e0e4e8;
+    border-radius: 6px;
+    background: #fdfdfd;
+    font-size: 0.82rem;
 }
 
-/* ── Row Actions ─────────────────────────────── */
-.action-btns { display: flex; gap: 8px; }
+.btn-inline {
+    padding: 6px 10px;
+    background: #2c3e50;
+    color: #ffcc00;
+    border: none;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.15s;
+}
+.btn-inline:hover { background: #1a252f; transform: translateY(-1px); }
+.btn-inline.cancel { background: #c0392b; color: #fff; }
+.btn-inline.cancel:hover { background: #a93226; }
 
-.btn-edit, .btn-history, .btn-delete {
+.action-btns { display: flex; gap: 8px; align-items: center; }
+
+.btn-edit, .btn-delete {
     display: inline-flex;
     align-items: center;
     gap: 6px;
-    padding: 7px 14px;
+    padding: 7px 12px;
     border-radius: 7px;
     font-size: 0.8rem;
     font-weight: 600;
@@ -147,45 +154,11 @@ body { background: #f0f2f5; }
     transition: background 0.2s, transform 0.15s;
 }
 
-.btn-edit,
-.btn-history    { background: #eaf4fb; color: #2980b9; }
-.btn-edit:hover,
-.btn-history:hover { background: #d4e9f7; transform: translateY(-1px); }
+.btn-edit { background: #eaf4fb; color: #2980b9; }
+.btn-edit:hover { background: #d4e9f7; transform: translateY(-1px); }
 
 .btn-delete { background: #fdedec; color: #c0392b; }
 .btn-delete:hover { background: #fad7d3; transform: translateY(-1px); }
-
-/* ── Price History Modal ─────────────────────── */
-.history-table {
-    width: 100%;
-    border-collapse: collapse;
-    font-size: 0.88rem;
-}
-.history-table thead tr { background: #2c3e50; color: #ffcc00; }
-.history-table thead th {
-    padding: 10px 18px;
-    text-align: left;
-    font-size: 0.73rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-}
-.history-table tbody tr { border-bottom: 1px solid #f0f2f5; }
-.history-table tbody tr:first-child td { font-weight: 700; background: #fffbea; }
-.history-table td { padding: 11px 18px; color: #2c3e50; }
-.history-table .td-amount { color: #1e8449; font-weight: 700; }
-.history-table .td-date   { color: #7f8c8d; font-size: 0.82rem; }
-.current-tag {
-    display: inline-block;
-    background: #ffcc00;
-    color: #2c3e50;
-    font-size: 0.7rem;
-    font-weight: 700;
-    padding: 2px 8px;
-    border-radius: 999px;
-    margin-left: 6px;
-}
-.modal-body-table { padding: 0; }
 
 .empty-state {
     text-align: center;
@@ -195,7 +168,7 @@ body { background: #f0f2f5; }
 .empty-state svg { opacity: 0.3; margin-bottom: 16px; }
 .empty-state p   { font-size: 0.95rem; margin: 0; }
 
-/* ── Modal Overlay ───────────────────────────── */
+/* Modal Overlay */
 .modal-overlay {
     display: none;
     position: fixed;
@@ -208,12 +181,12 @@ body { background: #f0f2f5; }
 }
 .modal-overlay.open { display: flex; }
 
-/* ── Modal Box ───────────────────────────────── */
+/* Modal Box */
 .modal {
     background: #fff;
     border-radius: 16px;
     width: 100%;
-    max-width: 480px;
+    max-width: 520px;
     box-shadow: 0 20px 60px rgba(0,0,0,0.2);
     overflow: hidden;
     animation: slideUp 0.25s ease;
@@ -246,12 +219,6 @@ body { background: #f0f2f5; }
     color: #ffcc00;
 }
 
-.modal-icon.danger {
-    background: rgba(231,76,60,0.15);
-    border-color: rgba(231,76,60,0.3);
-    color: #e74c3c;
-}
-
 .modal-title    { font-size: 1.05rem; font-weight: 700; color: #fff; }
 .modal-subtitle { font-size: 0.75rem; color: #7f8c9a; margin-top: 2px; }
 
@@ -270,10 +237,8 @@ body { background: #f0f2f5; }
 }
 .modal-close:hover { background: rgba(255,255,255,0.16); color: #fff; }
 
-/* ── Modal Form ──────────────────────────────── */
+/* Modal Form */
 .modal-body { padding: 28px; display: flex; flex-direction: column; gap: 18px; }
-
-.form-row-modal { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
 
 .form-group { display: flex; flex-direction: column; gap: 7px; }
 
@@ -286,20 +251,9 @@ body { background: #f0f2f5; }
 
 .input-wrap { position: relative; }
 
-.input-icon {
-    position: absolute;
-    left: 12px;
-    top: 50%;
-    transform: translateY(-50%);
-    color: #bdc3c7;
-    display: flex;
-    align-items: center;
-    pointer-events: none;
-}
-
 .form-input {
     width: 100%;
-    padding: 11px 14px 11px 40px;
+    padding: 11px 14px;
     border: 1.5px solid #e8ecf0;
     border-radius: 8px;
     font-size: 0.9rem;
@@ -309,7 +263,6 @@ body { background: #f0f2f5; }
     font-family: inherit;
     transition: border-color 0.2s, box-shadow 0.2s;
 }
-.form-input::placeholder { color: #c8d0d8; }
 .form-input:focus {
     outline: none;
     border-color: #ffcc00;
@@ -342,12 +295,6 @@ body { background: #f0f2f5; }
 }
 .btn-submit:hover { background: #1a252f; }
 
-.btn-submit.danger {
-    background: #c0392b;
-    color: #fff;
-}
-.btn-submit.danger:hover { background: #a93226; }
-
 .btn-cancel {
     padding: 12px 20px;
     background: #f4f6f8;
@@ -361,12 +308,3 @@ body { background: #f0f2f5; }
     transition: background 0.2s;
 }
 .btn-cancel:hover { background: #eaecef; }
-
-/* ── Delete confirm text ─────────────────────── */
-.delete-confirm-text {
-    padding: 24px 28px;
-    color: #7f8c8d;
-    font-size: 0.92rem;
-    line-height: 1.6;
-}
-.delete-confirm-text strong { color: #2c3e50; }

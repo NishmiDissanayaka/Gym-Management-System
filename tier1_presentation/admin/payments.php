@@ -13,7 +13,6 @@ require_once '../../tier2_application/get_payments.php';
     <link rel="stylesheet" href="payments_style.css">
 </head>
 <body>
-
     <?php $active_page = 'payments'; include 'includes/sidebar.php'; ?>
 
     <div class="main-content">
@@ -25,9 +24,43 @@ require_once '../../tier2_application/get_payments.php';
             </div>
             <div class="topbar-meta">
                 <div class="topbar-date"><?php echo date('l, F j, Y'); ?></div>
-                <div class="topbar-admin">Welcome, <strong>Admin</strong></div>
             </div>
         </header>
+
+        <div class="add-payment-card">
+            <h3>
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2c3e50" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                Add New Payment
+            </h3>
+            <form action="../../tier2_application/process_new_payment.php" method="POST">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Select Member</label>
+                        <select name="member_id" id="member_select" class="form-control" required onchange="updatePaymentDetails()">
+                            <option value="">-- Choose Member --</option>
+                            <?php while($m = $members_list->fetch_assoc()): ?>
+                                <option value="<?php echo $m['member_id']; ?>" 
+                                        data-price="<?php echo $m['amount']; ?>" 
+                                        data-plan="<?php echo htmlspecialchars($m['type_name']); ?>">
+                                    <?php echo $m['member_id'] . " - " . htmlspecialchars($m['full_name']); ?>
+                                </option>
+                            <?php endwhile; ?>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Membership Plan</label>
+                        <input type="text" id="display_plan" class="form-control" readonly placeholder="Auto-filled">
+                    </div>
+                    <div class="form-group">
+                        <label>Amount (Rs.)</label>
+                        <input type="number" step="0.01" name="amount" id="display_amount" class="form-control" required>
+                    </div>
+                    <div class="form-group" style="flex:0;">
+                        <button type="submit" class="btn-submit">Record Payment</button>
+                    </div>
+                </div>
+            </form>
+        </div>
 
         <div class="summary-grid">
 
@@ -67,6 +100,37 @@ require_once '../../tier2_application/get_payments.php';
                 </div>
             </div>
 
+        </div>
+
+        <div class="alerts-panel">
+            <div class="alerts-panel-header">
+                <h3>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#e6a800" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                    Payment Anomaly Alerts
+                </h3>
+            </div>
+            <?php if (!empty($alerts)): ?>
+                <table class="alerts-table">
+                    <thead>
+                        <tr><th>Member</th><th>Alert Type</th><th>Amount</th><th>Time</th></tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($alerts as $alert): ?>
+                            <tr>
+                                <td><?php echo htmlspecialchars($alert['member_name'] ?? '—'); ?></td>
+                                <td><span class="alert-badge <?php echo htmlspecialchars($alert['alert_type']); ?>"><?php echo htmlspecialchars($alert['alert_type']); ?></span></td>
+                                <td style="color:#c0392b; font-weight:bold;">Rs. <?php echo number_format($alert['amount'], 2); ?></td>
+                                <td><?php echo date('M j, g:i A', strtotime($alert['detected_at'])); ?></td>
+                            </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+            <?php else: ?>
+                <p class="no-alerts">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#1e8449" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                    No anomalies detected.
+                </p>
+            <?php endif; ?>
         </div>
 
         <div class="table-card">
@@ -139,8 +203,15 @@ require_once '../../tier2_application/get_payments.php';
                 </tbody>
             </table>
         </div>
-
     </div>
 
+    <script>
+    function updatePaymentDetails() {
+        var select = document.getElementById('member_select');
+        var selectedOption = select.options[select.selectedIndex];
+        document.getElementById('display_amount').value = selectedOption.getAttribute('data-price') || "";
+        document.getElementById('display_plan').value = selectedOption.getAttribute('data-plan') || "";
+    }
+    </script>
 </body>
 </html>
