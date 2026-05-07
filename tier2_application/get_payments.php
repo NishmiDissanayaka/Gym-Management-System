@@ -1,11 +1,9 @@
 <?php
 require_once 'db_config.php';
 
-
 $start_date = isset($_GET['start_date']) ? $_GET['start_date'] : '';
 $end_date = isset($_GET['end_date']) ? $_GET['end_date'] : '';
 $date_condition = "";
-
 
 if (!empty($start_date) && !empty($end_date)) {
     $date_condition = "WHERE DATE(p.payment_date) BETWEEN '$start_date' AND '$end_date'";
@@ -14,7 +12,6 @@ if (!empty($start_date) && !empty($end_date)) {
 } elseif (!empty($end_date)) {
     $date_condition = "WHERE DATE(p.payment_date) <= '$end_date'";
 }
-
 
 $total_revenue = 0;
 $r1 = $conn->query("SELECT COALESCE(SUM(amount), 0) AS total FROM payments");
@@ -25,7 +22,6 @@ $r2 = $conn->query("SELECT COALESCE(SUM(amount), 0) AS total FROM payments
                    WHERE MONTH(payment_date) = MONTH(CURRENT_DATE())
                    AND YEAR(payment_date) = YEAR(CURRENT_DATE())");
 if ($r2) $monthly_revenue = $r2->fetch_assoc()['total'];
-
 
 $payments_result = $conn->query("
     SELECT
@@ -42,7 +38,6 @@ $payments_result = $conn->query("
     ORDER BY p.payment_date DESC
 ");
 
-
 $total_payments = 0;
 if ($payments_result) {
     $total_payments = $payments_result->num_rows;
@@ -50,7 +45,6 @@ if ($payments_result) {
     $r3 = $conn->query("SELECT COUNT(*) AS total FROM payments");
     if ($r3) $total_payments = $r3->fetch_assoc()['total'];
 }
-
 
 $alerts = [];
 $alerts_result = $conn->query("
@@ -70,5 +64,6 @@ if ($alerts_result) {
         $alerts[] = $row;
     }
 }
-// =============================================
+
+$members_list = $conn->query("SELECT m.member_id, m.full_name, mt.amount, mt.type_name FROM members m JOIN membership_types mt ON m.type_id = mt.type_id ORDER BY m.full_name ASC");
 ?>
