@@ -25,7 +25,7 @@ body { background: #f0f2f5; }
     background: #fff;
     border-radius: 12px;
     box-shadow: 0 4px 15px rgba(0,0,0,0.07);
-    overflow: hidden;
+    overflow-x: auto;
     margin-bottom: 24px;
 }
 
@@ -47,6 +47,7 @@ body { background: #f0f2f5; }
     font-size: 0.75rem;
     text-transform: uppercase;
     letter-spacing: 0.5px;
+    white-space: nowrap;
 }
 
 .member-table tbody tr {
@@ -150,6 +151,38 @@ body { background: #f0f2f5; }
     cursor: not-allowed;
     white-space: nowrap;
 }
+
+/* ── Assign Trainer Column ───────────────────── */
+.assign-form {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+.trainer-select {
+    padding: 6px 8px;
+    border-radius: 6px;
+    border: 1px solid #d5d8dc;
+    font-size: 0.78rem;
+    color: #2c3e50;
+    background: #fdfdfd;
+    width: 140px;
+    cursor: pointer;
+}
+.trainer-select:focus { outline: none; border-color: #2980b9; }
+
+.btn-assign {
+    padding: 5px 12px;
+    border-radius: 6px;
+    border: none;
+    background: #2980b9;
+    color: #fff;
+    font-size: 0.76rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+    align-self: flex-start;
+}
+.btn-assign:hover { background: #1f6fa3; }
 
 /* ── Back Button ─────────────────────────────── */
 .btn-back {

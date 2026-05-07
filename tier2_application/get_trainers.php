@@ -9,22 +9,21 @@ if ($r) {
 }
 
 
-$query = "SELECT 
-            trainer_id, 
-            name, 
-            specialization, 
-            phone, 
-            current_load, 
-            (current_load >= 10) AS is_overloaded 
-          FROM trainers 
+$query = "SELECT
+            trainer_id,
+            name,
+            specialization,
+            phone,
+            COALESCE(current_load, 0) AS current_load,
+            (COALESCE(current_load, 0) >= 10) AS is_overloaded
+          FROM trainers
           ORDER BY name ASC";
 
 $trainers_result = $conn->query($query);
 
-
- 
-function fetchAllTrainers($conn) {
-    $sql = "SELECT *, (current_load >= 10) AS is_overloaded FROM trainers ORDER BY name ASC";
-    return $conn->query($sql);
+if (!$trainers_result) {
+    // current_load column missing — fall back to basic query
+    $query_basic = "SELECT trainer_id, name, specialization, phone, 0 AS current_load, 0 AS is_overloaded FROM trainers ORDER BY name ASC";
+    $trainers_result = $conn->query($query_basic);
 }
 ?>
