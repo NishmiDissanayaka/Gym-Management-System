@@ -79,8 +79,6 @@ BEGIN
     VALUES ('DELETED', OLD.member_id);
 END //
 
-DROP TRIGGER IF EXISTS after_payment_insert //
-
 CREATE TRIGGER after_payment_insert
 AFTER INSERT ON payments
 FOR EACH ROW
