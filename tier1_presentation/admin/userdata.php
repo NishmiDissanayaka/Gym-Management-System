@@ -1,5 +1,7 @@
 <?php
 require_once '../../tier2_application/get_members.php';
+
+require_once '../../tier2_application/get_trainers.php'; 
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -9,12 +11,18 @@ require_once '../../tier2_application/get_members.php';
     <title>View Members - Fitness Hub</title>
     <link rel="stylesheet" href="dashboard_style.css">
     <link rel="stylesheet" href="userdata_style.css">
+    <style>
+        
+        .trainer-select { padding: 5px; border-radius: 4px; border: 1px solid #ddd; font-size: 12px; width: 130px; }
+        .btn-assign-small { background: #007bff; color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer; font-size: 11px; margin-top: 5px; }
+        .btn-assign-small:hover { background: #0056b3; }
+        .load-full { color: #dc3545; font-size: 10px; font-weight: bold; }
+    </style>
 </head>
 <body>
 
     <?php $active_page = 'members'; include 'includes/sidebar.php'; ?>
 
-    <!-- Main Content -->
     <div class="main-content">
 
         <div class="page-header">
@@ -37,14 +45,16 @@ require_once '../../tier2_application/get_members.php';
                         <th>Gender</th>
                         <th>Membership Plan</th>
                         <th>Join Date</th>
-                    </tr>
+                        <th>Assign Trainer</th> </tr>
                 </thead>
                 <tbody>
                 <?php
                 if ($result->num_rows > 0) {
                     while ($row = $result->fetch_assoc()) {
                         $plan = htmlspecialchars($row["type_name"]);
+                        $member_id = $row["member_id"];
                         $planClass = 'plan-default';
+                        
                         if (stripos($plan, 'gold') !== false || stripos($plan, 'premium') !== false) {
                             $planClass = 'plan-gold';
                         } elseif (stripos($plan, 'silver') !== false || stripos($plan, 'standard') !== false) {
@@ -54,7 +64,7 @@ require_once '../../tier2_application/get_members.php';
                         }
                 ?>
                     <tr>
-                        <td class="cell-id"><?php echo htmlspecialchars($row["member_id"]); ?></td>
+                        <td class="cell-id"><?php echo htmlspecialchars($member_id); ?></td>
                         <td class="cell-name"><?php echo htmlspecialchars($row["full_name"]); ?></td>
                         <td class="cell-email"><?php echo htmlspecialchars($row["email"]); ?></td>
                         <td><?php echo htmlspecialchars($row["phone"]); ?></td>
@@ -65,11 +75,30 @@ require_once '../../tier2_application/get_members.php';
                         </td>
                         <td><span class="plan-badge <?php echo $planClass; ?>"><?php echo $plan; ?></span></td>
                         <td class="cell-date"><?php echo htmlspecialchars($row["join_date"]); ?></td>
+                        
+                        <td>
+                            <form action="../../tier2_application/process_assignment.php" method="POST">
+                                <input type="hidden" name="member_id" value="<?php echo $member_id; ?>">
+                                <select name="trainer_id" class="trainer-select" required>
+                                    <option value="">Select Trainer</option>
+                                    <?php 
+                                    
+                                    $trainers_result->data_seek(0); 
+                                    while($t = $trainers_result->fetch_assoc()): ?>
+                                        <option value="<?php echo $t['trainer_id']; ?>" <?php echo ($t['is_overloaded'] ? 'disabled' : ''); ?>>
+                                            <?php echo htmlspecialchars($t['name']); ?> 
+                                            (<?php echo $t['current_load']; ?>/10)
+                                        </option>
+                                    <?php endwhile; ?>
+                                </select>
+                                <button type="submit" class="btn-assign-small">Assign</button>
+                            </form>
+                        </td>
                     </tr>
                 <?php
                     }
                 } else {
-                    echo "<tr><td colspan='7' class='no-data'>No members found</td></tr>";
+                    echo "<tr><td colspan='8' class='no-data'>No members found</td></tr>";
                 }
                 ?>
                 </tbody>

@@ -1,5 +1,5 @@
-
 DELIMITER //
+
 
 CREATE PROCEDURE RegisterNewMember(
     IN p_full_name VARCHAR(100),
@@ -31,52 +31,45 @@ BEGIN
     COMMIT;
 END //
 
-DELIMITER ;
-
 
 CREATE TABLE IF NOT EXISTS audit_logs (
     log_id INT PRIMARY KEY AUTO_INCREMENT,
     action VARCHAR(50),
     member_id INT,
     action_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
-
-DELIMITER //
+) //
 
 CREATE TRIGGER AfterMemberDelete
 BEFORE DELETE ON members
 FOR EACH ROW
 BEGIN
-    DELETE FROM payments
-    WHERE member_id = OLD.member_id;
+   
+    DELETE FROM member_trainer_assignments WHERE member_id = OLD.member_id;
+    
+    DELETE FROM payments WHERE member_id = OLD.member_id;
 
     INSERT INTO audit_logs (action, member_id) 
     VALUES ('DELETED', OLD.member_id);
 END //
-
-DELIMITER ;
-
-
 
 
 CREATE TRIGGER after_payment_insert
 AFTER INSERT ON payments
 FOR EACH ROW
 BEGIN
-
-    -- 1. Negative payment
+    
     IF NEW.amount < 0 THEN
         INSERT INTO payment_alerts (member_id, payment_id, alert_type, amount)
         VALUES (NEW.member_id, NEW.payment_id, 'NEGATIVE', NEW.amount);
     END IF;
 
-    -- 2. Unusually high payment (adjust threshold as needed)
+    
     IF NEW.amount > 50000 THEN
         INSERT INTO payment_alerts (member_id, payment_id, alert_type, amount)
         VALUES (NEW.member_id, NEW.payment_id, 'HIGH_VALUE', NEW.amount);
     END IF;
 
-    -- 3. Duplicate payment on the same day for the same member
+    
     IF EXISTS (
         SELECT 1 FROM payments
         WHERE member_id = NEW.member_id
@@ -86,25 +79,26 @@ BEGIN
         INSERT INTO payment_alerts (member_id, payment_id, alert_type, amount)
         VALUES (NEW.member_id, NEW.payment_id, 'DUPLICATE', NEW.amount);
     END IF;
+END //
 
+
+CREATE TRIGGER after_assignment_insert
+AFTER INSERT ON member_trainer_assignments
+FOR EACH ROW
+BEGIN
+    UPDATE trainers 
+    SET current_load = current_load + 1 
+    WHERE trainer_id = NEW.trainer_id;
+END //
+
+
+CREATE TRIGGER after_assignment_delete
+AFTER DELETE ON member_trainer_assignments
+FOR EACH ROW
+BEGIN
+    UPDATE trainers 
+    SET current_load = current_load - 1 
+    WHERE trainer_id = OLD.trainer_id;
 END //
 
 DELIMITER ;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
