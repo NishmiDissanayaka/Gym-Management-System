@@ -64,7 +64,15 @@ BEGIN
     COMMIT;
 END //
 
--- 4. Trigger: AfterMemberDelete
+-- 4. Procedure: ExpireMemberships (Bulk Update)
+CREATE PROCEDURE ExpireMemberships()
+BEGIN
+    UPDATE members 
+    SET status = 'Expired' 
+    WHERE membership_end < CURDATE() AND status = 'Active';
+END //
+
+-- 5. Trigger: AfterMemberDelete
 CREATE TRIGGER AfterMemberDelete
 BEFORE DELETE ON members
 FOR EACH ROW
